@@ -54,6 +54,17 @@ describe("Emjay", function() {
     assertEqual('this1that', template.run({test: looper}));
   });
 
+  it('should support comments', function() {
+    var template = new Emjay("test`//throw('i hate you')`");
+    assertEqual('test', template.run());
+  });
+
+  it('should support multiline comments', function() {
+    var template = new Emjay("test`/*`testing dude`*/`");
+    assertEqual('test', template.run());
+  });
+
+
 });
 
 
