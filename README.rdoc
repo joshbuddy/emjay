@@ -4,8 +4,10 @@
 
 You can create awesome javascript templates:
 
-  new Emjay("1 + 1 is =`2`, but val = =`val`").run({val:3})
-  
+  new Emjay("1 + 1 is [=2-], but val = [=val-]").run({val:3})
+
 Will result in
 
   1 + 1 is 2 but val = 3
+  
+It will escape by default, if you want raw output, use <tt>[== '<test>' =]</tt>
