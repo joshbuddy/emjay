@@ -46,7 +46,7 @@ describe("Emjay", function() {
 
     var looper = function(runner) {
       _emjay.concat('this');
-      runner.call(this, 1);
+      runner(1);
       _emjay.concat('that');
     }
     
