@@ -37,6 +37,11 @@ describe("Emjay", function() {
     assertEqual('test1', template.run({val: function(e) {return e}}));
   });
 
+  it("should be able to loop", function() {
+    var template = new Emjay("`for (var i = 0; i!= 5; i++) { `=`i``}`");
+    assertEqual('01234', template.run());
+  });
+
 });
 
 
