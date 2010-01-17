@@ -42,6 +42,18 @@ describe("Emjay", function() {
     assertEqual('01234', template.run());
   });
 
+  it("should be able to output and loop", function() {
+
+    var looper = function(runner) {
+      this.concat('this');
+      runner.call(this, 1);
+      this.concat('that');
+    }
+    
+    var template = new Emjay("`test.call(_emjay, function(i) {`=`i``})`");
+    assertEqual('this1that', template.run({test: looper}));
+  });
+
 });
 
 
