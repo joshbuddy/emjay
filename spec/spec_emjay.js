@@ -45,12 +45,12 @@ describe("Emjay", function() {
   it("should be able to output and loop", function() {
 
     var looper = function(runner) {
-      this.concat('this');
+      _emjay.concat('this');
       runner.call(this, 1);
-      this.concat('that');
+      _emjay.concat('that');
     }
     
-    var template = new Emjay("`test.call(_emjay, function(i) {`=`i``})`");
+    var template = new Emjay("`test(function(i) {`=`i``})`");
     assertEqual('this1that', template.run({test: looper}));
   });
 
