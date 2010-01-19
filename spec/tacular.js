@@ -1,7 +1,7 @@
 /*
  * spec/tacular
  *
- * A minimal spec library for node.js
+ * A minimal spec library for node.js for testing both syncronous and asyncronous code.
  *
  * To run:
  *
@@ -25,9 +25,19 @@
  *     // teardown goes here
  *   });
  *
+ *   // Supply a function that takes no arguments for a syncronous test
  *   it("should do X", function() {
  *     // place code and assertions here
  *     // available: assert(x), assertEqual(x, y), assertNotEqual(x, y)
+ *   });
+ *
+ *   // Supply a function that takes one argument, a promise, to
+ *   // use an async test
+ *   it("should fail async", function(promise){
+ *     promise.addCallback(function(){
+ *       assert(false);
+ *     })
+ *     setTimeout(function(){ promise.emitSuccess() }, 500);
  *   });
  *
  * });
@@ -59,8 +69,21 @@ process.mixin(require('sys'));
     specStack.push(name);
     if (specVerbose) print("\n  "+name+" : ");
     specBeforeEach();
-    try { func(); }
-    catch(e) { if (e != 'fail') specError(e); }
+    try {
+      if ( func.length == 0 ){
+        func();
+      } else {
+        var promise = new process.Promise();
+        promise.addErrback(function(e){ puts('were fucked'+inspect(e));throw e });
+        promise.addCallback(function(){ puts('were done!!!');assert(true); });
+        func(promise);
+        puts('before wait');
+        //promise.wait();
+        puts('after wait');
+        
+      }
+    }
+    catch(e) { puts(inspect(e));if (e != 'fail') specError(e); }
     specStack.pop();
     specAfterEach();
   };

@@ -1,73 +1,97 @@
 require('../lib/emjay');
 
 describe("Emjay", function() {
-  it("should interpolate a simple value", function() {
-    var template = new Emjay("test[=1-]");
-    assertEqual('test1', template.run());
-  });
 
-  it("should interpolate a more complex example", function() {
-    var template = new Emjay("test[='test' + 3-]");
-    assertEqual('testtest3', template.run());
+  //it("should interpolate a simple value", function() {
+  //  new Emjay.Parser("test[=1-]").generator().run(function(runtime) {
+  //    assertEqual(runtime.result(), 'test1');
+  //  });
+  //});
+  //
+  it("should interpolate a more complex example using single quotes", function() {
+    new Emjay.Parser("test[='test' + 3-]").generator().run(function(runtime) {
+      assertEqual(runtime.result(), 'testtest3');
+    })
   });
   
-  it("should not interpolate if it starts with `", function() {
-    var template = new Emjay("test[-1+1-]");
-    assertEqual('test', template.run());
+  it("should interpolate a more complex example using double quotes", function() {
+    new Emjay.Parser("test[=\"test\" + 3-]").generator().run(function(runtime) {
+      assertEqual(runtime.result(), 'testtest3');
+    })
+  });
+  
+  it("should not interpolate if it starts with -", function() {
+    new Emjay.Parser("test[-1+1-]").generator().run(function(runtime) {
+      assertEqual(runtime.result(), 'test');
+    })
   });
   
   it("should preserve variables declared in it, but not on subsequent runs", function() {
-    var template = new Emjay("[- try {val += 1} catch(e) {}; val = 1 -]test[=val-][-val += 1-]");
-    assertEqual('test1', template.run());
-    assertEqual('test1', template.run());
+    var generator = new Emjay.Parser("[- try {val += 1} catch(e) {}; val = 1 -]test[=val-][-val += 1-]").generator();
+    generator.run(function(runtime) {
+      assertEqual('test1', runtime.result());
+      puts('done first run ..... \n');
+      generator.run(function(runtime) {
+        assertEqual('test1', runtime.result());
+      });
+    });
   });
   
   it("should reference variables bound at eval-time", function() {
-    var template = new Emjay("test[=val-]");
-    assertEqual('test1', template.run({val: 1}));
+    new Emjay.Parser("test[=val-]").generator().run(function(runtime) {
+      assertEqual(runtime.result({val:1}), 'test1');
+    });
   });
   
   it("should reference and call variables bound at eval-time", function() {
-    var template = new Emjay("test[=val(1)-]");
-    assertEqual('test1', template.run({val: function(e) {return e}}));
+    new Emjay.Parser("test[=val(1)-]").generator().run(function(runtime) {
+      assertEqual(runtime.result({val:function(e) {return e}}), 'test1');
+    });
   });
   
   it("should be able to loop", function() {
-    var template = new Emjay("[-for (var i = 0; i!= 5; i++) { -][=i-][-}-]");
-    assertEqual('01234', template.run());
+    new Emjay.Parser("[-for (var i = 0; i!= 5; i++) { -][=i-][-}-]").generator().run(function(runtime) {
+      assertEqual('01234', runtime.result());
+    });
   });
   
-  it("should be able to output and loop", function() {
-    var looper = function(runner) {
-      _emjay.concat('this');
-      runner(1);
-      _emjay.concat('that');
+  it("should be able to output and accept a function", function() {
+    var looper = function(func) {
+      __runtime.__buffer +=  'this';
+      func(1);
+      __runtime.__buffer +=  'that';
     }
-    
-    var template = new Emjay("[- test(function(i) { -][= i -][- }) -]");
-    assertEqual('this1that', template.run({test: looper}));
+
+    new Emjay.Parser("[- test(function(i) { -][= i -][- }) -]").generator().run(function(runtime) {
+      assertEqual('this1that', runtime.result({test: looper}));
+    });
+
   });
   
   it('should support comments', function() {
-    var template = new Emjay("test[- //throw('i hate you') -]");
-    assertEqual('test', template.run());
+    new Emjay.Parser("test[- //throw('i hate you') -]").generator().run(function(runtime) {
+      assertEqual('test', runtime.result());
+    });
   });
   
   it('should support multiline comments', function() {
-    var template = new Emjay("test[- /* -]testing dude[-*/-]");
-    assertEqual('test', template.run());
+    new Emjay.Parser("test[- /* -]testing dude[-*/-]").generator().run(function(runtime) {
+      assertEqual('test', runtime.result());
+    });
   });
   
   it('should escape by default', function() {
-    var template = new Emjay("test[='<test>'-]");
-    assertEqual("test&lt;test&gt;", template.run());
+    new Emjay.Parser("test[='<test>'-]").generator().run(function(runtime) {
+      assertEqual("test&lt;test&gt;", runtime.result());
+    });
   });
-
+  
   it('should unescape explicitly', function() {
-    var template = new Emjay("test[=='<test>'-]");
-    assertEqual("test<test>", template.run());
+    new Emjay.Parser("test[=='<test>'-]").generator().run(function(runtime) {
+      assertEqual("test<test>", runtime.result());
+    });
   });
-
+  
 
 });
 
