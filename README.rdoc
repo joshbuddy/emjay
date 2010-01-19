@@ -1,13 +1,18 @@
 = Emjay
 
-== Usage
+Let's talk a bit about templating in the JavaScript world. Right now no good standard exists. Many of the templating systems people have creating assume that the templating engine can directly return the computed value. Mustache.js, though admirable, uses <tt>{{</tt> and <tt>}}</tt> for its delimiters, a character sequence which can naturally occur in JavaScript.
 
-You can create awesome javascript templates:
+I've set out to solve the problem of asynchronous requirements, making those easy to deal with and natural, easy-to-type delimiters.
 
-  new Emjay("1 + 1 is [=2-], but val = [=val-]").run({val:3})
+== Delimiters
 
-Will result in
+In Emjay, there are three types of delimiters.
 
-  1 + 1 is 2 but val = 3
-  
-It will escape by default, if you want raw output, use <tt>[== '<test>' =]</tt>
+* <tt>[= -]</tt> - This is for simple outputting. Values can be computed and outputted, or variables bound at run-time can be accessed. This method performs HTML escaping. 
+* <tt>[== -]</tt> - This is for asynchronous interaction. A special variable, <tt>__result</tt> is available within this block. <tt>__result</tt> has the following methods:
+  * <tt>write</tt> - This allows you to write raw content to the template which will later be eval'ed. Use with extreme caution. It returns the <tt>__result</tt> object.
+  * <tt>append</tt> - This allows you to output a string. This is string is subject to HTML escaping. It returns the <tt>__result</tt> object.
+  * <tt>appendRaw</tt> - This allows you to output a string. This is string is not subject to HTML escaping. It returns the <tt>__result</tt> object.
+  * <tt>done</tt> - This allows you to mark your block as done and continue compilation of the template. Nothing should be done after calling this method.
+* <tt>[- -]</tt> - This allows you to write JavaScript code that will be evaluated, but not executed.
+

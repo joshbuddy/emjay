@@ -27,11 +27,11 @@ describe("Emjay", function() {
   });
   
   it("should preserve variables declared in it, but not on subsequent runs", function() {
-    var generator = new Emjay.Parser("[- try {val += 1} catch(e) {}; val = 1 -]test[=val-][-val += 1-]").generator();
-    generator.run(function(runtime) {
+    var parser = new Emjay.Parser("[- try {val += 1} catch(e) {}; val = 1 -]test[=val-][-val += 1-]");
+    parser.generator().run(function(runtime) {
       assertEqual('test1', runtime.result());
       puts('done first run ..... \n');
-      generator.run(function(runtime) {
+      parser.generator().run(function(runtime) {
         assertEqual('test1', runtime.result());
       });
     });
