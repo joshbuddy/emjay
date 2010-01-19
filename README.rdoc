@@ -16,6 +16,10 @@ In Emjay, there are three types of delimiters.
   * <tt>done</tt> - This allows you to mark your block as done and continue compilation of the template. Nothing should be done after calling this method.
 * <tt>[- -]</tt> - This allows you to write JavaScript code that will be evaluated, but not output.
 
+== String tainting
+
+All strings can be made safe by calling the appending methods with <tt>madeSafe()</tt>. makeSafe()
+
 == Examples
 
 Run <tt>node examples/nodejs/test.js</tt> to see a complex node.js example.
