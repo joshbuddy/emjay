@@ -14,5 +14,8 @@ In Emjay, there are three types of delimiters.
   * <tt>append</tt> - This allows you to output a string. This is string is subject to HTML escaping. It returns the <tt>__result</tt> object.
   * <tt>appendRaw</tt> - This allows you to output a string. This is string is not subject to HTML escaping. It returns the <tt>__result</tt> object.
   * <tt>done</tt> - This allows you to mark your block as done and continue compilation of the template. Nothing should be done after calling this method.
-* <tt>[- -]</tt> - This allows you to write JavaScript code that will be evaluated, but not executed.
+* <tt>[- -]</tt> - This allows you to write JavaScript code that will be evaluated, but not output.
 
+== Examples
+
+Run <tt>node examples/nodejs/test.js</tt> to see a complex node.js example.
