@@ -2,12 +2,12 @@ require('../lib/emjay');
 
 describe("Emjay", function() {
 
-  //it("should interpolate a simple value", function() {
-  //  new Emjay.Parser("test[=1-]").parse().generator().run(function(runtime) {
-  //    assertEqual(runtime.result(), 'test1');
-  //  });
-  //});
-  //
+  it("should interpolate a simple value", function() {
+    new Emjay.Parser("test[=1-]").parse().generator().run(function(runtime) {
+      assertEqual(runtime.result(), 'test1');
+    });
+  });
+  
   it("should interpolate a more complex example using single quotes", function() {
     new Emjay.Parser("test[='test' + 3-]").parse().generator().run(function(runtime) {
       assertEqual(runtime.result(), 'testtest3');
@@ -86,11 +86,16 @@ describe("Emjay", function() {
   });
   
   it('should unescape explicitly', function() {
-    new Emjay.Parser("test[=='<test>'-]").parse().generator().run(function(runtime) {
+    new Emjay.Parser("test[='<test>'.makeSafe()-]").parse().generator().run(function(runtime) {
       assertEqual("test<test>", runtime.result());
     });
   });
   
+  //it('should be able to ', function() {
+  //  new Emjay.Parser("test[='<test>'.makeSafe()-]").parse().generator().run(function(runtime) {
+  //    assertEqual("test<test>", runtime.result());
+  //  });
+  //});
 
 });
 
