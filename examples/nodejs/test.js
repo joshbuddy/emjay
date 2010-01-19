@@ -1,5 +1,5 @@
-require('../../lib/emjay');
-process.mixin(this, 'sys');
+require('../../lib/emjay/node');
+var sys = require('sys')
 
 HTMLHelper = {
   tag: function(name, attrs) {
@@ -11,7 +11,7 @@ HTMLHelper = {
   }
 }
 
-var template = new Emjay.NodeJs('./examples/nodejs/test.mjs').run({title: 'test title'}, function(rendered) {
-  puts('--------------------------------- RENDERED');
-  puts(rendered);
+new Emjay.NodeJs([HTMLHelper, Emjay.NodeJs.Helpers]).load('./examples/nodejs/test.mjs').run({title: 'test title'}, function(rendered) {
+  sys.puts('--------------------------------- RENDERED');
+  sys.puts(rendered);
 });
