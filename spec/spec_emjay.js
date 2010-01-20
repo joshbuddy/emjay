@@ -37,14 +37,14 @@ describe("Emjay", function() {
   });
   
   it("should reference variables bound at eval-time", function() {
-    new Emjay.Parser("test[=val-]").parse().generator().run(function(runtime) {
-      assertEqual(runtime.result({val:1}), 'test1');
+    new Emjay.Parser("test[=val-]").parse().generator({val:1}).run(function(runtime) {
+      assertEqual(runtime.result(), 'test1');
     });
   });
   
   it("should reference and call variables bound at eval-time", function() {
-    new Emjay.Parser("test[=val(1)-]").parse().generator().run(function(runtime) {
-      assertEqual(runtime.result({val:function(e) {return e}}), 'test1');
+    new Emjay.Parser("test[=val(1)-]").parse().generator({val:function(e) {return e}}).run(function(runtime) {
+      assertEqual(runtime.result(), 'test1');
     });
   });
   
@@ -61,8 +61,8 @@ describe("Emjay", function() {
       __runtime.__buffer +=  'that';
     }
 
-    new Emjay.Parser("[- test(function(i) { -][= i -][- }) -]").parse().generator().run(function(runtime) {
-      assertEqual('this1that', runtime.result({test: looper}));
+    new Emjay.Parser("[- test(function(i) { -][= i -][- }) -]").parse().generator({test: looper}).run(function(runtime) {
+      assertEqual('this1that', runtime.result());
     });
 
   });

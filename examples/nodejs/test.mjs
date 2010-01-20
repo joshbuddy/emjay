@@ -4,6 +4,9 @@ Doing simple output
 Outputting a variable passed into the template.
 [=title-]
 
+Or, interacting in async mode..
+[==__result.append(__bindings.title).done()-]
+
 Doing output with mixed in method, tag.
 [=this.tag('test', {attr:'value'})-]
 
