@@ -56,9 +56,9 @@ describe("Emjay", function() {
   
   it("should be able to output and accept a function", function() {
     var looper = function(func) {
-      __runtime.__buffer +=  'this';
+      __runtime.__buffer.push('this');
       func(1);
-      __runtime.__buffer +=  'that';
+      __runtime.__buffer.push('that');
     }
 
     new Emjay.Parser("[- test(function(i) { -][= i -][- }) -]").parse().generator({test: looper}).run(function(runtime) {

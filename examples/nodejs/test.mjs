@@ -23,12 +23,23 @@ Appending to the buffer directly without escaping.
 [- this.append('<testing>'.makeSafe()) -]
 
 Appending even more directly.
-[- this.__buffer += 'you are in my buffer' -]
+[- this.__buffer.push('you are in my buffer') -]
 
-How many characters in the buffer?
-[=this.__buffer.length-]
+Or, write a function in ... this works too
+[- this.__buffer.push(function() {return 'this is a string that will get executed later';})-]
 
 Loopin'!
 [- for(var i =0; i != 10; i++) { -]
   This is i .. [=i-]<br>
 [- } -]
+
+Capturing ...
+[- var captured = this.capture(function() {-][='testing'-][-})-]
+[='We captured: '+captured-]
+
+We have for test ...[=this.contentFor('test')-]
+
+But .. lets do it later..
+[- this.captureFor('test', function() { -]
+  This is some content for "testing"
+[- }) -]
