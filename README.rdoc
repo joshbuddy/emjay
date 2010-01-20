@@ -23,8 +23,7 @@ This would render the <tt>title</tt> variable directly into the page. It would b
 
 * <tt>[== -]</tt> - This is for asynchronous interaction. A special variable, <tt>__result</tt> is available within this block. <tt>__result</tt> has the following methods:
   * <tt>write</tt> - This allows you to write raw content to the template which will later be eval'ed. Use with extreme caution. It returns the <tt>__result</tt> object.
-  * <tt>append</tt> - This allows you to output a string. This is string is subject to HTML escaping. It returns the <tt>__result</tt> object.
-  * <tt>appendRaw</tt> - This allows you to output a string. This is string is not subject to HTML escaping. It returns the <tt>__result</tt> object.
+  * <tt>append</tt> - This allows you to output a string. It returns the <tt>__result</tt> object.
   * <tt>done</tt> - This allows you to mark your block as done and continue compilation of the template. Nothing should be done after calling this method.
 
 As well, the bindings passing into the template are available as <tt>__bindings</tt>.
@@ -66,4 +65,3 @@ A more thorough node.js based example in available in the examples directory.
 
 == API
 
-Still more to do here... its coming.

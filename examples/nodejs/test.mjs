@@ -10,6 +10,9 @@ Or, interacting in async mode..
 Doing output with mixed in method, tag.
 [=this.tag('test', {attr:'value'})-]
 
+Doing output with mixed in method, tag and a function.
+[-this.tag('p', {'text-align':'center'}, function() {-] Paragraph text bitches! [- }) -]
+
 Including a partial via async inclusion.
 [== this.partial('./examples/nodejs/test2.mjs', {output: 'i love the world a lot'})-]
 
