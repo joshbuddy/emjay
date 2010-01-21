@@ -38,8 +38,13 @@ Capturing ...
 [='We captured: '+captured-]
 
 We have for test ...[=this.contentFor('test')-]
+We have for test ...[=this.contentFor('test2')-]
 
 But .. lets do it later..
 [- this.captureFor('test', function() { -]
   This is some content for "testing"
 [- }) -]
+
+more content...[=this.contentFor('test3')-]...lesscontent
+
+[- this.captureFor('test3', function() { -][== this.partial('./examples/nodejs/test3.mjs')-][- }) -]
