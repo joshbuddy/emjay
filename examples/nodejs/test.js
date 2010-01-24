@@ -6,12 +6,12 @@ HTMLHelper = {
   tag: function(name, attrs, func) {
     var buf = "<"+name;
     for(var key in attrs) {
-      buf += ' ' + this.htmlEscape(key) + '="'+this.htmlEscape(attrs[key]) + '"'
+      buf += ' ' + this.escapeHtml(key) + '="'+this.escapeHtml(attrs[key]) + '"'
     }
     if (func) {
-      __runtime.append((buf + '>').makeSafe());
+      __runtime.write((buf + '>').makeSafe());
       func();
-      __runtime.append(('</'+name+'>').makeSafe());
+      __runtime.write(('</'+name+'>').makeSafe());
     } else {
       return (buf + '>').makeSafe();
     }

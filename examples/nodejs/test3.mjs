@@ -4,5 +4,5 @@
 
 We have for test ...[=this.contentFor('test')-]
 
-[-var fromTest3 = 'testing testing'-]
+[-var fromTest3 = 'from test 3 testing testing'-]
 [=fromTest3-]
