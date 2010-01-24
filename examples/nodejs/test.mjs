@@ -4,7 +4,7 @@ Doing simple output
 Outputting a variable passed into the template.
 [=title-]
 
-Or, interacting in async mode..
+Or, interacting in pre-processor mode..
 [% this.append(this.base.bindings.title).done() %]
 
 Doing output with mixed in method, tag.
@@ -17,16 +17,16 @@ Including a partial via async inclusion.
 [=this.partial([% this.fileToString('./examples/nodejs/test2.mjs') %], {output: 'i love the world a lot'})-]
 
 Appending to the buffer directly.
-[-// this.append('<testing>') -]
+[-this.write('<testing>') -]
 
 Appending to the buffer directly without escaping.
-[-// this.append('<testing>'.makeSafe()) -]
+[-this.write('<testing>'.makeSafe()) -]
 
 Appending even more directly.
-[-// this.__buffer.push('you are in my buffer') -]
+[-this.buffer.push('you are in my buffer') -]
 
 Or, write a function in ... this works too
-[-// this.__buffer.push(function() {return 'this is a string that will get executed later';})-]
+[- this.buffer.push(function() {return 'this is a string that will get executed later';})-]
 
 Loopin'!
 [- for(var i = 0; i != 10; i++) { -]
@@ -39,6 +39,8 @@ Capturing ...
 
 We have for test ...[=this.contentFor('test')-]
 But .. lets do it later..
-[- this.captureFor('test', function() { -]
-  This is some content for "testing"
-[- }) -]
+[- this.captureFor('test', 'this is my content for "testing"') -]
+
+We have for test2 ...[=this.contentFor('test2')-]
+But .. lets do it later..
+[- this.captureFor('test2', function() { -][='this is some more content for "testing"' -][- }) -]
