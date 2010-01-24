@@ -19,19 +19,19 @@ In Emjay, there are three types of delimiters.
   
 This would render the <tt>title</tt> variable directly into the page. It would be escaped.
 
-=== Async block
+=== Preprocessor block
 
-* <tt>[== -]</tt> - This is for asynchronous interaction. A special variable, <tt>__result</tt> is available within this block. <tt>__result</tt> has the following methods:
-  * <tt>write</tt> - This allows you to write raw content to the template which will later be eval'ed. Use with extreme caution. It returns the <tt>__result</tt> object.
-  * <tt>append</tt> - This allows you to output a string. It returns the <tt>__result</tt> object.
+* <tt>[% %]</tt> - This is for asynchronous interaction. A special variable, <tt>__runtime</tt> is available within this block. <tt>__runtime</tt> has the following methods (+this+ will also be +__runtime+):
+  * <tt>write</tt> - This allows you to write raw content to the template which will later be eval'ed. It returns the <tt>__runtime</tt> object.
+  * <tt>append</tt> - This allows you to output a string. It returns the <tt>__runtime</tt> object.
   * <tt>done</tt> - This allows you to mark your block as done and continue compilation of the template. Nothing should be done after calling this method.
 
-As well, the bindings passing into the template are available as <tt>__bindings</tt>.
+As well, the bindings passing into the template are available as <tt>this.base.bindings</tt>.
 
 ==== Example
   
   [- // read a file, and output it. -]
-  [==Posix.cat('myfile.txt', function(contents) { __result.append(contents).done() })-]
+  [% Posix.cat('myfile.txt', function(contents) { __runtime.append(contents).done() }) %]
   
 This would load myfile.txt, and output it entire contents in place.
 
