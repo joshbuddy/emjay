@@ -90,6 +90,12 @@ describe("Emjay", function() {
     });
   });
   
+  it('should unescape explicitly with [==', function() {
+    new Emjay.Base("test[=='<test>'-]").execute(function(content) {
+      assertEqual("test<test>", content);
+    });
+  });
+  
   it('unsafe normal content should pass through normally', function() {
     new Emjay.Base("hey 'you' weirdo <p align=\"center\">[='<test>'.makeSafe()-]</p>").execute(function(content) {
       assertEqual("hey 'you' weirdo <p align=\"center\"><test></p>", content);
