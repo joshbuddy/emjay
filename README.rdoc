@@ -57,7 +57,11 @@ All strings can be made safe by calling <tt>makeSafe()</tt> on them. This return
   [- // Outputting a variable passed into the template. -]
   [=title.makeSafe()-]
   
-This would perform no escaping on the <tt>title</tt> variable.
+This would perform no escaping on the <tt>title</tt> variable. Alternately, you can use the <tt>[== -]</tt> syntax to output.
+
+  [- // Outputting a variable passed into the template. -]
+  [==title-]
+
 
 == Node.js
 
