@@ -21,4 +21,5 @@ HTMLHelper = {
 new Emjay.NodeJs([HTMLHelper, Emjay.NodeJs.Helpers]).load('./examples/nodejs/test.mjs').run({title: 'test title'}, function(rendered) {
   sys.puts('--------------------------------- RENDERED');
   sys.puts(rendered);
+  sys.puts('\n--------------------------------- RENDERED');
 });

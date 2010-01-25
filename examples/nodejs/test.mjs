@@ -7,9 +7,6 @@ Outputting a variable passed into the template.
 Or, interacting in pre-processor mode..
 [% this.append(this.base.bindings.title).done() %]
 
-Doing output with mixed in method, tag.
-[=this.tag('test', {attr:'value'})-]
-
 Doing output with mixed in method, tag and a function.
 [-this.tag('p', {'text-align':'center'}, function() {-] Paragraph text bitches! [- }) -]
 
@@ -44,3 +41,9 @@ But .. lets do it later..
 We have for test2 ...[=this.contentFor('test2')-]
 But .. lets do it later..
 [- this.captureFor('test2', function() { -][='this is some more content for "testing"' -][- }) -]
+
+
+We have for test3 ...[=this.contentFor('test3')-]
+
+Including a partial via async inclusion.
+[=this.partial([% this.fileToString('./examples/nodejs/test3.mjs') %], {output: 'i love the world a lot'})-]

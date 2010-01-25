@@ -1,4 +1,4 @@
-[- this.captureFor('test2', function() { -]
+[- this.captureFor('test3', function() { -]
   this is test2 which is being captured in test3.mjs
 [- }) -]
 
